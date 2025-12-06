@@ -1,4 +1,4 @@
-name: Quick Scan CI Test
+name: Quick Scan CI (PAT Bot)
 
 on:
   pull_request:
@@ -8,9 +8,6 @@ on:
 jobs:
   quick-scan:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     env:
       AUDIT_AGENT_TOKEN: ${{ secrets.AUDIT_AGENT_TOKEN }}
     steps:
@@ -25,7 +22,6 @@ jobs:
               "branchName": "${{ github.event.pull_request.head.ref }}",
               "issueNumber": ${{ github.event.number }},
               "commitHash": "${{ github.event.pull_request.head.sha }}",
-              "contractFiles": ["LandManager.sol"],
-              "github_token": "${{ secrets.GITHUB_TOKEN }}"
+              "contractFiles": ["LandManager.sol"]
             }' \
             https://a0356a02468a.ngrok-free.app/api/v1/scanner/quick-scan/launch
